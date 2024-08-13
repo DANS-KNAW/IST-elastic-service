@@ -1,0 +1,11 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status && rabbitmq-diagnostics check_local_alarms | grep -q 'reported no local alarms'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
