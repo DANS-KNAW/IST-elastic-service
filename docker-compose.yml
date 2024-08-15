@@ -3,6 +3,9 @@ services:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RMQ_PASS}
     healthcheck:
       test: ["CMD-SHELL", "rabbitmqctl status && rabbitmq-diagnostics check_local_alarms | grep -q 'reported no local alarms'"]
       interval: 30s
