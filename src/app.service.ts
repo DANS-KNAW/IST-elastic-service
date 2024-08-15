@@ -9,10 +9,6 @@ export class AppService {
 
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   async createIndex(alias: string) {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: alias,

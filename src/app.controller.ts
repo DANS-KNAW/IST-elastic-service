@@ -6,11 +6,6 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello() {
-    return this.appService.createIndex('anime');
-  }
-
   @MessagePattern({ cmd: 'create-index' })
   createIndex(
     @Payload() alias: string,
