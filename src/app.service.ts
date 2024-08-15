@@ -66,6 +66,9 @@ export class AppService {
         } as IndicesCreateResponse;
       });
 
+    /**
+     * This is similar to the previous check, but for the alias.
+     */
     if (!aliasIndice.acknowledged) {
       const exists = await this.elasticsearchService.indices.existsAlias({
         name: alias,
