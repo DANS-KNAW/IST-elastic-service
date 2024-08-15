@@ -2,7 +2,6 @@ import { IndicesCreateResponse } from '@elastic/elasticsearch/lib/api/types';
 import { Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { RpcException } from '@nestjs/microservices';
-import { error } from 'console';
 
 @Injectable()
 export class AppService {

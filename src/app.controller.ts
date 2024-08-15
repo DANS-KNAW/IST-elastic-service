@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
 
 @Controller()
 export class AppController {
@@ -18,4 +17,6 @@ export class AppController {
   ): Promise<{ message: string; alias: string; indice: string }> {
     return this.appService.createIndex(alias);
   }
+
+  
 }
