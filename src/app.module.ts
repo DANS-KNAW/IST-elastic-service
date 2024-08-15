@@ -11,10 +11,11 @@ import rmqConfig from './config/rmq.config';
     ConfigModule.forRoot({
       isGlobal: false,
       envFilePath: ['.env.local', '.env.development', '.env.production'],
+      ignoreEnvVars: true,
       load: [commonConfig, rmqConfig],
       validationSchema,
       validationOptions: {
-        allowUnknown: true, // Might want to set this to false in production.
+        allowUnknown: false,
         abortEarly: true,
       },
     }),
