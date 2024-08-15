@@ -96,4 +96,27 @@ export class AppService {
       this.logger.error(error.message);
     }
   }
+
+  async indexDocument(alias: string, document: Record<string, any>) {
+    const exists = await this.elasticsearchService.indices.existsAlias({
+      name: alias,
+    });
+
+    if (!exists) {
+      throw new RpcException('Alias does not exist');
+    }
+
+    const indexed = await this.elasticsearchService.index({
+      index: alias,
+      body: document,
+    });
+
+    if (indexed.result != 'created' && indexed.result != 'updated') {
+      throw new RpcException('Failed to index document');
+    }
+
+    return {
+      message: 'Document successfully indexed',
+    };
+  }
 }

@@ -37,7 +37,7 @@ import esConfig, { CONFIG_ES } from './config/es.config';
             rejectUnauthorized: config.rejectUnauthorized,
           },
           maxRetries: 3,
-          requestTimeout: 10000,
+          requestTimeout: 20000,
         };
       },
     }),

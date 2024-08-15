@@ -12,4 +12,11 @@ export class AppController {
   ): Promise<{ message: string; alias: string; indice: string }> {
     return this.appService.createIndex(alias);
   }
+
+  @MessagePattern({ cmd: 'index-document' })
+  indexDocument(
+    @Payload() payload: { alias: string; body: Record<string, any> },
+  ): Promise<{ message: string }> {
+    return this.appService.indexDocument(payload.alias, payload.body);
+  }
 }
