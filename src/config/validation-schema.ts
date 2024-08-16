@@ -5,6 +5,7 @@ const validationSchema = Joi.object({
     .valid('development', 'production')
     .default('development')
     .required(),
+  API_KEY: Joi.string().required(),
 
   RMQ_HOST: Joi.string().required(),
   RMQ_PORT: Joi.number().required(),
