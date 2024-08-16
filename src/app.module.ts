@@ -7,6 +7,7 @@ import commonConfig from './config/common.config';
 import rmqConfig from './config/rmq.config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import esConfig, { CONFIG_ES } from './config/es.config';
+import { ApiKeyService } from './guards/api-key/api-key.service';
 
 @Module({
   imports: [
@@ -43,6 +44,6 @@ import esConfig, { CONFIG_ES } from './config/es.config';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ApiKeyService],
 })
 export class AppModule {}
