@@ -94,6 +94,7 @@ export class AppService {
       };
     } catch (error) {
       this.logger.error(error.message);
+      throw new RpcException(error.message);
     }
   }
 
