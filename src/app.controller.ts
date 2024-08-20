@@ -8,15 +8,15 @@ export class AppController {
 
   @MessagePattern({ cmd: 'create-index' })
   createIndex(
-    @Payload() alias: string,
+    @Payload() payload: {alias: string, properties?: Record<string, any>},
   ): Promise<{ message: string; alias: string; indice: string }> {
-    return this.appService.createIndex(alias);
+    return this.appService.createIndex(payload.alias, payload.properties);
   }
 
   @MessagePattern({ cmd: 'index-document' })
   indexDocument(
-    @Payload() payload: { alias: string; body: Record<string, any> },
+    @Payload() payload: { alias: string; body: Record<string, any>, customId?: string },
   ): Promise<{ message: string }> {
-    return this.appService.indexDocument(payload.alias, payload.body);
+    return this.appService.indexDocument(payload.alias, payload.body, payload.customId);
   }
 }

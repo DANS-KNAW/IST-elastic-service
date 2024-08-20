@@ -9,7 +9,10 @@ export class AppService {
 
   constructor(private readonly elasticsearchService: ElasticsearchService) {}
 
-  async createIndex(alias: string): Promise<{
+  async createIndex(
+    alias: string,
+    properties?: Record<string, any>,
+  ): Promise<{
     message: string;
     alias: string;
     indice: string;
@@ -29,9 +32,18 @@ export class AppService {
        */
       const index = alias + '-0001';
 
+      let mappings = {};
+
+      if (properties) {
+        mappings = {
+          properties,
+        };
+      }
+
       const indice = await this.elasticsearchService.indices
         .create({
           index,
+          mappings: mappings,
           settings: {
             number_of_shards: 3,
             number_of_replicas: 1,
@@ -98,7 +110,7 @@ export class AppService {
     }
   }
 
-  async indexDocument(alias: string, document: Record<string, any>) {
+  async indexDocument(alias: string, document: Record<string, any>, customId?: string): Promise<{ message: string }> {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: alias,
     });
@@ -107,9 +119,15 @@ export class AppService {
       throw new RpcException('Alias does not exist');
     }
 
+    let id: string | undefined;
+    if (customId) {
+      id = document[customId];
+    }
+
     const indexed = await this.elasticsearchService.index({
       index: alias,
       body: document,
+      id: id,
     });
 
     if (indexed.result != 'created' && indexed.result != 'updated') {
