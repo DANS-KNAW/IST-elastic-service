@@ -1,4 +1,7 @@
-import { IndicesCreateResponse } from '@elastic/elasticsearch/lib/api/types';
+import {
+  IndicesCreateResponse,
+  MappingTypeMapping,
+} from '@elastic/elasticsearch/lib/api/types';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { RpcException } from '@nestjs/microservices';
@@ -18,7 +21,7 @@ export class AppService {
 
   async createIndex(
     alias: string,
-    properties?: Record<string, any>,
+    mappings?: MappingTypeMapping,
   ): Promise<{
     message: string;
     alias: string;
@@ -39,18 +42,10 @@ export class AppService {
        */
       const index = alias + '-0001';
 
-      let mappings = {};
-
-      if (properties) {
-        mappings = {
-          properties,
-        };
-      }
-
       const indice = await this.elasticsearchService.indices
         .create({
           index,
-          mappings: mappings,
+          mappings: mappings ?? undefined,
           settings: {
             number_of_shards: this.config.poolEndpoints.length, // We set the number of shards to the number of nodes in the cluster.
             number_of_replicas: 1,
