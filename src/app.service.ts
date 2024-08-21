@@ -1,13 +1,20 @@
 import { IndicesCreateResponse } from '@elastic/elasticsearch/lib/api/types';
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { RpcException } from '@nestjs/microservices';
+import esConfig from './config/es.config';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
   private readonly logger = new Logger(AppService.name);
 
-  constructor(private readonly elasticsearchService: ElasticsearchService) {}
+  constructor(
+    @Inject(esConfig.KEY)
+    private readonly config: ConfigType<typeof esConfig>,
+
+    private readonly elasticsearchService: ElasticsearchService,
+  ) {}
 
   async createIndex(
     alias: string,
@@ -45,7 +52,7 @@ export class AppService {
           index,
           mappings: mappings,
           settings: {
-            number_of_shards: 3,
+            number_of_shards: this.config.poolEndpoints.length, // We set the number of shards to the number of nodes in the cluster.
             number_of_replicas: 1,
           },
         })
@@ -110,7 +117,11 @@ export class AppService {
     }
   }
 
-  async indexDocument(alias: string, document: Record<string, any>, customId?: string): Promise<{ message: string }> {
+  async indexDocument(
+    alias: string,
+    document: Record<string, any>,
+    customId?: string,
+  ): Promise<{ message: string }> {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: alias,
     });
