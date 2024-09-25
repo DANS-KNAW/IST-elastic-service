@@ -2,7 +2,7 @@ import {
   IndicesCreateResponse,
   MappingTypeMapping,
 } from '@elastic/elasticsearch/lib/api/types';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { RpcException } from '@nestjs/microservices';
 import esConfig from './config/es.config';
@@ -143,5 +143,56 @@ export class AppService {
     return {
       message: 'Document successfully indexed',
     };
+  }
+
+  async getAllIndexDocuments(index: string) {
+    const exists = await this.elasticsearchService.indices.existsAlias({
+      name: index,
+    });
+
+    if (!exists) {
+      throw new NotFoundException('Index does not exist');
+    }
+
+    const documents = await this.elasticsearchService.search({
+      index: index,
+      query: {
+        match_all: {},
+      },
+      size: 10,
+    });
+
+    return documents;
+  }
+
+  async getDocument(index: string, documentIdentifier: string) {
+    const exists = await this.elasticsearchService.indices.existsAlias({
+      name: index,
+    });
+
+    if (!exists) {
+      throw new NotFoundException('Index does not exist');
+    }
+
+    try {
+      const document = await this.elasticsearchService.get<unknown>({
+        index: index,
+        id: documentIdentifier,
+      });
+
+      if (!document || !document.found || !document._source) {
+        throw new NotFoundException('Document not found');
+      }
+
+      return document._source;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      if (error.meta?.statusCode === 404) {
+        throw new NotFoundException('Document not found');
+      }
+      throw error;
+    }
   }
 }

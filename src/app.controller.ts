@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { MappingTypeMapping } from '@elastic/elasticsearch/lib/api/types';
@@ -32,5 +32,18 @@ export class AppController {
       payload.body,
       payload.customId,
     );
+  }
+
+  @Get(':index')
+  getAllDocuments(@Param('index') index: string) {
+    return this.appService.getAllIndexDocuments(index);
+  }
+
+  @Get(':index/:document')
+  getDocument(
+    @Param('index') index: string,
+    @Param('document') document: string,
+  ) {
+    return this.appService.getDocument(index, document);
   }
 }
