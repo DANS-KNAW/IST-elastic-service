@@ -14,11 +14,11 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
     ConfigModule.forRoot({
       isGlobal: false,
       envFilePath: ['.env.local', '.env.development', '.env.production'],
-      ignoreEnvVars: true,
+      ignoreEnvVars: false,
       load: [commonConfig, rmqConfig, esConfig],
       validationSchema,
       validationOptions: {
-        allowUnknown: false,
+        allowUnknown: true,
         abortEarly: true,
       },
     }),
