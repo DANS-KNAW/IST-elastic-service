@@ -14,7 +14,7 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
     ConfigModule.forRoot({
       isGlobal: false,
       envFilePath: ['.env.local', '.env.development', '.env.production', '.env'],
-      ignoreEnvVars: true,
+      ignoreEnvVars: false,
       load: [commonConfig, rmqConfig, esConfig],
       validationSchema,
       validationOptions: {
