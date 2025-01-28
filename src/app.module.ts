@@ -13,7 +13,12 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: false,
-      envFilePath: ['.env.local', '.env.development', '.env.production', '.env'],
+      envFilePath: [
+        '.env.local',
+        '.env.development',
+        '.env.production',
+        '.env',
+      ],
       ignoreEnvVars: false,
       load: [commonConfig, rmqConfig, esConfig],
       // validationSchema,
@@ -38,6 +43,9 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
           // tls: {
           //   rejectUnauthorized: config.rejectUnauthorized,
           // },
+          tls: {
+            rejectUnauthorized: false,
+          },
           maxRetries: 3,
           requestTimeout: 20000,
         };
