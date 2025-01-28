@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
-import validationSchema from './config/validation-schema';
+// import validationSchema from './config/validation-schema';
 import commonConfig from './config/common.config';
 import rmqConfig from './config/rmq.config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
@@ -16,11 +16,11 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
       envFilePath: ['.env.local', '.env.development', '.env.production', '.env'],
       ignoreEnvVars: false,
       load: [commonConfig, rmqConfig, esConfig],
-      validationSchema,
-      validationOptions: {
-        allowUnknown: true,
-        abortEarly: true,
-      },
+      // validationSchema,
+      // validationOptions: {
+      //   allowUnknown: true,
+      //   abortEarly: true,
+      // },
     }),
     ElasticsearchModule.registerAsync({
       imports: [ConfigModule],
