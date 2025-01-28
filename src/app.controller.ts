@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 // import { MappingTypeMapping } from '@elastic/elasticsearch/lib/api/types';
@@ -39,16 +39,17 @@ export class AppController {
     return 'Proxy This!';
   }
 
-  @Get(':index/_search')
-  getAllDocuments(@Param('index') index: string) {
-    return this.appService.getAllIndexDocuments(index);
+  @Post(':index/_search')
+  getAllDocuments(@Param('index') index: string, @Body() body: any) {
+    return this.appService.getAllIndexDocuments(index, body);
   }
 
-  @Get(':index/_source/:document')
+  @Post(':index/_source/:document')
   getDocument(
     @Param('index') index: string,
     @Param('document') document: string,
+    @Body() body: any,
   ) {
-    return this.appService.getDocument(index, document);
+    return this.appService.getDocument(index, document, body);
   }
 }

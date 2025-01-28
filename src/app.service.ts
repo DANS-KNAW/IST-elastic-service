@@ -145,9 +145,10 @@ export class AppService {
     };
   }
 
-  async getAllIndexDocuments(index: string) {
+  async getAllIndexDocuments(index: string, query: object) {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: index,
+      ...query,
     });
 
     if (!exists) {
@@ -156,16 +157,12 @@ export class AppService {
 
     const documents = await this.elasticsearchService.search({
       index: index,
-      query: {
-        match_all: {},
-      },
-      size: 10,
     });
 
     return documents;
   }
 
-  async getDocument(index: string, documentIdentifier: string) {
+  async getDocument(index: string, documentIdentifier: string, query: object) {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: index,
     });
@@ -178,6 +175,7 @@ export class AppService {
       const document = await this.elasticsearchService.get<unknown>({
         index: index,
         id: documentIdentifier,
+        ...query,
       });
 
       if (!document || !document.found || !document._source) {
