@@ -29,19 +29,15 @@ import { ApiKeyService } from './guards/api-key/api-key.service';
         const config =
           configService.get<ConfigType<typeof esConfig>>(CONFIG_ES);
 
-        let auth = undefined;
-        if (config.clusterSecure == true) {
-          auth = {
-            apiKey: config.apiKey,
-          };
-        }
-
         return {
           nodes: config.poolEndpoints,
-          auth,
-          tls: {
-            rejectUnauthorized: config.rejectUnauthorized,
+          auth: {
+            username: config.user,
+            password: config.password,
           },
+          // tls: {
+          //   rejectUnauthorized: config.rejectUnauthorized,
+          // },
           maxRetries: 3,
           requestTimeout: 20000,
         };
