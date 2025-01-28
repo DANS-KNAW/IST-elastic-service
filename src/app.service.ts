@@ -148,7 +148,6 @@ export class AppService {
   async getAllIndexDocuments(index: string, query: object) {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: index,
-      ...query,
     });
 
     if (!exists) {
@@ -157,12 +156,14 @@ export class AppService {
 
     const documents = await this.elasticsearchService.search({
       index: index,
+      ...query,
     });
 
     return documents;
   }
 
   async getDocument(index: string, documentIdentifier: string, query: object) {
+    console.log(query);
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: index,
     });
@@ -184,6 +185,8 @@ export class AppService {
 
       return document._source;
     } catch (error) {
+      console.log(error);
+
       if (error instanceof NotFoundException) {
         throw error;
       }

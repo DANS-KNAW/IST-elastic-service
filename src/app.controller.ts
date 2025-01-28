@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  RawBodyRequest,
+  Req,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 // import { MessagePattern, Payload } from '@nestjs/microservices';
 // import { MappingTypeMapping } from '@elastic/elasticsearch/lib/api/types';
@@ -40,8 +48,11 @@ export class AppController {
   }
 
   @Post(':index/_search')
-  getAllDocuments(@Param('index') index: string, @Body() body: any) {
-    return this.appService.getAllIndexDocuments(index, body);
+  getAllDocuments(
+    @Param('index') index: string,
+    @Req() req: RawBodyRequest<Request>,
+  ) {
+    return this.appService.getAllIndexDocuments(index, req.body);
   }
 
   @Post(':index/_source/:document')
