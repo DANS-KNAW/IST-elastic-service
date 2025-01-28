@@ -18,7 +18,7 @@ async function bootstrap() {
     },
   });
 
-  await app.startAllMicroservices();
+  // await app.startAllMicroservices();
 
   /**
    * The `NestFactory.create()` method is currently necessary because `NestFactory.createMicroservice()`
@@ -32,6 +32,6 @@ async function bootstrap() {
    * Note: There are no HTTP routes in this application, so the port number is irrelevant
    * and will not be used for any network communication.
    */
-  await app.listen(50000);
+  await app.listen(3000);
 }
 bootstrap();
