@@ -32,6 +32,7 @@ async function bootstrap() {
    * Note: There are no HTTP routes in this application, so the port number is irrelevant
    * and will not be used for any network communication.
    */
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
