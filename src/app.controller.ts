@@ -34,12 +34,12 @@ export class AppController {
   //   );
   // }
 
-  @Get(':index')
+  @Get(':index/_search')
   getAllDocuments(@Param('index') index: string) {
     return this.appService.getAllIndexDocuments(index);
   }
 
-  @Get(':index/:document')
+  @Get(':index/_source/:document')
   getDocument(
     @Param('index') index: string,
     @Param('document') document: string,
