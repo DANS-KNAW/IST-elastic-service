@@ -34,6 +34,11 @@ export class AppController {
   //   );
   // }
 
+  @Get()
+  getHello(): string {
+    return 'Proxy This!';
+  }
+
   @Get(':index/_search')
   getAllDocuments(@Param('index') index: string) {
     return this.appService.getAllIndexDocuments(index);
