@@ -55,12 +55,11 @@ export class AppController {
     return this.appService.getAllIndexDocuments(index, req.body);
   }
 
-  @Post(':index/_source/:document')
+  @Get(':index/_source/:document')
   getDocument(
     @Param('index') index: string,
     @Param('document') document: string,
-    @Body() body: any,
   ) {
-    return this.appService.getDocument(index, document, body);
+    return this.appService.getDocument(index, document);
   }
 }

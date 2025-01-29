@@ -162,8 +162,7 @@ export class AppService {
     return documents;
   }
 
-  async getDocument(index: string, documentIdentifier: string, query: object) {
-    console.log(query);
+  async getDocument(index: string, documentIdentifier: string) {
     const exists = await this.elasticsearchService.indices.existsAlias({
       name: index,
     });
@@ -176,7 +175,6 @@ export class AppService {
       const document = await this.elasticsearchService.get<unknown>({
         index: index,
         id: documentIdentifier,
-        ...query,
       });
 
       if (!document || !document.found || !document._source) {
