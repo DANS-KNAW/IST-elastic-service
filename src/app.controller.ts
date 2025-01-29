@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Param,
   Post,
   RawBodyRequest,
@@ -47,6 +48,7 @@ export class AppController {
     return 'Proxy This!';
   }
 
+  @HttpCode(200)
   @Post(':index/_search')
   getAllDocuments(
     @Param('index') index: string,
