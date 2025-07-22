@@ -19,6 +19,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
+  "pnpm": {
+    "overrides": {
+      "form-data": "4.0.4"
+    }
+  },
   "dependencies": {
     "@elastic/elasticsearch": "8",
     "@nestjs/common": "^11.1.5",
@@ -40,7 +45,7 @@
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.3.1",
-    "@types/supertest": "^6.0.0",
+    "@types/supertest": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.42.0",
@@ -49,8 +54,8 @@
     "jest": "^30.0.5",
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
-    "supertest": "^7.0.0",
-    "ts-jest": "^29.1.0",
+    "supertest": "^7.1.3",
+    "ts-jest": "^29.4.0",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
