@@ -28,7 +28,7 @@
     "@elastic/elasticsearch": "^8.15.0",
     "@nestjs/common": "^11.1.5",
     "@nestjs/config": "^4.0.2",
-    "@nestjs/core": "^11.1.5",
+    "@nestjs/core": "^11.1.18",
     "@nestjs/elasticsearch": "^11.1.0",
     "@nestjs/microservices": "^11.1.5",
     "@nestjs/platform-express": "^11.1.5",
